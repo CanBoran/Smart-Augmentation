@@ -1,0 +1,38 @@
+https://github.com/cs-chan/ArtGAN/tree/master/WikiArt%20Dataset
+
+
+:~/Downloads/wikiart$ wget https://raw.githubusercontent.com/cs-chan/ArtGAN/master/WikiArt%20Dataset/Genre/genre_val.csv
+:~/Downloads/wikiart$ wget https://raw.githubusercontent.com/cs-chan/ArtGAN/master/WikiArt%20Dataset/Genre/genre_train.csv
+
+:~/Downloads/wikiart$ sed -n '/,4/p' genre_* | sed 's/,4*//' > landscape_filelist.txt
+:~/Downloads/wikiart$ mkdir ./landscape
+:~/Downloads/wikiart$ dos2unix landscape_filelist.txt 
+:~/Downloads/wikiart$ grep Realism landscape_filelist.txt | while read filename; do  cp  ./$filename ./landscape/; done
+
+
+
+0 abstract_painting
+1 cityscape
+2 genre_painting
+3 illustration
+4 landscape
+5 nude_painting
+6 portrait
+7 religious_painting
+8 sketch_and_study
+9 still_life
+
+
+grep Abstract_Expressionism abstract_filelist.txt | while read filename; do  cp  ./$filename ./abstract/; done
+grep Impressionism portrait_filelist.txt | while read filename; do  cp  ./$filename ./portrait/; done
+
+
+ls -v | cat -n | while read n f; do mv -n "$f" "landscape$n.jpg"; done 
+
+
+
+cat selected.txt | while read filename; do  cp  ./$filename ./selected/; done
+
+python dataset_tool.py create_from_images datasets/landscape ~/Downloads/wikiart/Edits/selected_resized --shuffle 0
+
+Added 8215 images.
